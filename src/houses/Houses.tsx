@@ -11,12 +11,10 @@ import Pagination from '@material-ui/lab/Pagination';
 class Houses extends React.Component<HousesProps, any>{
     constructor(props: HousesProps) {
         super(props);
-        console.log('constructor')
         this.props.getHousesOfPage(0);
     }
 
     componentDidMount() {
-        console.log('DidMount')
         this.props.houses === null && this.props.getHousesOfPage(0);
     }
 

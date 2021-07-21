@@ -28,10 +28,10 @@ ReactDOM.render(
                   <Route path={appConstants.userRoute} component={User}/>
                   <Route path={appConstants.loginRoute} component={Login}/>
                   <Route path={appConstants.registrationRoute} component={Registration}/>
-                  <Route path={appConstants.housesRoute} component={Houses}/>
                   <Route path={`${appConstants.houseInfoRoute}/:id`} component={HouseInfo}/>
                   <Route path={appConstants.addHousesRoute} component={AddHouse}/>
                   <Route path={appConstants.editHousesRoute} component={AddHouse}/>
+                  <Route path={appConstants.housesRoute} component={Houses}/>
               </Switch>
           </App>
       </BrowserRouter>

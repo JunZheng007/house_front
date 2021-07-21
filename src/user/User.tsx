@@ -19,10 +19,9 @@ const User = (props: UserProps) => {
     const rentInfos = useSelector(({rentInfos}: ReduxState) => rentInfos);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(checkLogin());
-
-    }, [dispatch, props])
+    // useEffect(() => {
+    //     dispatch(checkLogin());
+    // }, [dispatch, props])
 
     useEffect(() => {
         if (user === null) {

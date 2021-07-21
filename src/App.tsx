@@ -12,9 +12,9 @@ function App(props: any) {
     const flags = useSelector(({flags}: ReduxState) => flags);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(checkLogin());
-    }, [dispatch, props])
+    // useEffect(() => {
+    //     dispatch(checkLogin());
+    // }, [dispatch, props])
 
     return (
         <div className="App">

@@ -10,7 +10,7 @@ export const appConstants = {
     userRoute: '/user',
     loginRoute: '/login',
     registrationRoute: '/registration',
-    housesRoute: '/houses',
+    housesRoute: '',
     houseInfoRoute: '/house-detail',
     addHousesRoute: '/add-house',
     editHousesRoute: '/edit-house',

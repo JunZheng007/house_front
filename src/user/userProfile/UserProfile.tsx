@@ -17,7 +17,7 @@ const UserProfile = (props: UserProfileProps) => {
             <Avatar className="avatar" sizes="48x48" src={props.user.photo}/>
             <ProfilePhoto open={openUpdatePhoto} close={() => setOpenUpdatePhoto(false)}/>
             <Typography>
-                <Link href='' onClick={updatePhoto}>Update Photo</Link>
+                {/*<Link href='' onClick={updatePhoto}>Update Photo</Link>*/}
             </Typography>
             <Typography gutterBottom variant="h2" component="h2">
                 {props.user.username.toUpperCase()}

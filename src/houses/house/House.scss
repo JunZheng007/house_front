@@ -1,0 +1,23 @@
+.House{
+  position: relative;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 800px;
+
+  .house-img {
+    width: 300px;
+  }
+
+  .house-info {
+    width: 600px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.link {
+  text-decoration: none;
+}

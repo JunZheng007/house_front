@@ -1,0 +1,12 @@
+@import "src/user/rentHistories/rentHistory/RentHistory.scss";
+
+.user-review {
+  @extend .rent-history;
+
+  .post-date {
+    width: 100%;
+    //display: flex;
+    text-align: end;
+  }
+
+}

@@ -38,8 +38,12 @@ const AddHouse = (props: AddHouseProps) => {
 
     const handlerSubmit = (event: SyntheticEvent) => {
         event.preventDefault();
-        console.log(house);
-        editHouse ? dispatch(updateHouse(house)) : dispatch(addNewHouse(house));
+        setHouse({
+            ...house,
+            owner: user
+        });
+        console.log(house, editHouse);
+        editHouse === {} as House ? dispatch(updateHouse(house)) : dispatch(addNewHouse(house));
         props.history.push("/user");
     }
 

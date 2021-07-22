@@ -2,7 +2,7 @@ import React, {SyntheticEvent, useState} from "react";
 import './UserProfile.scss'
 import {Avatar, Card, Link, Typography} from "@material-ui/core";
 import {User} from "../../shared/model/User";
-import ProfilePhoto from "../updatePhoto/ProfilePhoto";
+import ProfilePhoto from "../ProfilePhoto/ProfilePhoto";
 
 const UserProfile = (props: UserProfileProps) => {
     const [openUpdatePhoto, setOpenUpdatePhoto] = useState(false);
@@ -12,12 +12,12 @@ const UserProfile = (props: UserProfileProps) => {
         setOpenUpdatePhoto(true);
     }
 
-    return(
+    return (
         <Card className="user-profile" elevation={6}>
             <Avatar className="avatar" sizes="48x48" src={props.user.photo}/>
             <ProfilePhoto open={openUpdatePhoto} close={() => setOpenUpdatePhoto(false)}/>
             <Typography>
-                {/*<Link href='' onClick={updatePhoto}>Update Photo</Link>*/}
+                <Link href='' onClick={updatePhoto}>Update Photo</Link>
             </Typography>
             <Typography gutterBottom variant="h2" component="h2">
                 {props.user.username.toUpperCase()}

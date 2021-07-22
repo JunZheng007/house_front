@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true
 
 export const login = (user: User, succeed: (res: User) => void, fail: () => void) => {
     const userFormData = qs.stringify(user);
-    const loginPromise = axios.post(`${process.env.REACT_APP_HOUSE_API}/login`, userFormData);
+    const loginPromise = axios.post(`${process.env.REACT_APP_HOUSE_API}/login`, userFormData, {headers: {"Control-Allow-Credentials": true}});
     loginPromise
         .then((res: AxiosResponse<{ type: string }>) => {
             console.log(res);

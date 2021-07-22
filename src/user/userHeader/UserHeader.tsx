@@ -23,7 +23,10 @@ const UserHeader = (props: UserHeaderProps) => {
     const handleLogout = () => {
         dispatch(logout());
         dispatch(setIsLogout(true));
-        props.history?.push("/houses");
+        setTimeout(() => {
+            props.history?.push(appConstants.housesRoute)
+        }, 2000);
+
     }
 
     return (

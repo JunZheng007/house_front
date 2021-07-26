@@ -6,6 +6,7 @@ import {userReducer} from "./userReducer";
 import {flagReducer} from "./flagReducer";
 import {editHouseReducer} from "./editHouseReducer";
 import {houseDetailReducer} from "./houseDetailReducer";
+import {houseFileReducer} from "./houseFileReducer";
 
 export const rootReducer = combineReducers({
     house: houseDetailReducer,
@@ -14,5 +15,6 @@ export const rootReducer = combineReducers({
     reviews: reviewReducer,
     user: userReducer,
     flags: flagReducer,
-    editHouse: editHouseReducer
+    editHouse: editHouseReducer,
+    housePhotos: houseFileReducer,
 })

@@ -8,7 +8,7 @@ import {ReduxState} from "../shared/constants/appConstants";
 import Pageable from "../shared/model/Pageable";
 import Pagination from '@material-ui/lab/Pagination';
 
-class Houses extends React.Component<HousesProps, any>{
+class Houses extends React.Component<HousesProps, any> {
     constructor(props: HousesProps) {
         super(props);
         this.props.getHousesOfPage(0);
@@ -25,9 +25,10 @@ class Houses extends React.Component<HousesProps, any>{
     render() {
         console.log(this.props.houses);
         return (
+            this.props.houses &&
             <div className="d-flex flex-column align-items-center">
                 {this.props.houses?.content.map(house =>
-                        <House house={house} key={house.id}/>
+                    <House house={house} key={house.id}/>
                 )}
                 <Pagination
                     className="m-3"

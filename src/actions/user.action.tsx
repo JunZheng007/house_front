@@ -56,7 +56,7 @@ export const logout = () => {
     }
 }
 
-export const uploadPhoto = (file: File) => {
+export const uploadUserPhoto = (file: File) => {
     const fileFormData = new FormData();
     fileFormData.append('file', file);
     const uploadPhotoPromise = axios.post(

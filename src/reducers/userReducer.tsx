@@ -25,6 +25,7 @@ export const userReducer = (state: User | null = null, action: UserAction) => {
         case appConstants.LOGOUT:
             return null;
         case appConstants.UPDATE_USER:
+            console.log(action.payload.data);
             return action.payload.data;
         default:
             return state;

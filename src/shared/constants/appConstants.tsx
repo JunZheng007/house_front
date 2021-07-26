@@ -39,7 +39,9 @@ export const appConstants = {
     SET_IS_LOGIN: 'SET_IS_LOGIN',
     SET_IS_LOGOUT: 'SET_IS_LOGOUT',
     EDIT_HOUSE: 'EDIT_HOUSE',
-    CLEAN_EDIT_HOUSE: 'CLEAN_EDIT_HOUSE'
+    CLEAN_EDIT_HOUSE: 'CLEAN_EDIT_HOUSE',
+    ADD_HOUSE_PHOTOS: 'ADD_HOUSE_PHOTOS',
+    ADD_NEW_HOUSE: 'ADD_NEW_HOUSE'
 
 }
 
@@ -50,5 +52,6 @@ export interface ReduxState {
     rentInfos: RentInfo[],
     reviews: Pageable<Review>,
     flags: Flags,
-    editHouse: House
+    editHouse: House,
+    housePhotos: File[]
 }

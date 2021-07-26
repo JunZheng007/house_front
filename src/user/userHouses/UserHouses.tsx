@@ -15,6 +15,13 @@ const UserHouses = (props: UserHousesProps) => {
         dispatch(getHousesByOwnerIdOfPage(props.user_id, page - 1));
     }
 
+    const handleAddHouse = () => {
+        dispatch({
+            type: appConstants.CLEAN_EDIT_HOUSE,
+            payload: null
+        })
+    }
+
     return (
         <Card className="d-flex flex-column align-items-center" elevation={6}>
             {
@@ -25,7 +32,7 @@ const UserHouses = (props: UserHousesProps) => {
                     </Typography>
             }
             <Typography className="text-center">
-                <Link to={appConstants.addHousesRoute}>Add New House</Link>
+                <Link to={appConstants.addHousesRoute} onClick={handleAddHouse}>Add New House</Link>
             </Typography>
             <Pagination
                 className="m-3"

@@ -58,3 +58,23 @@ export const deleteHouse = (house: House) => {
         payload: deleteHousePromise
     }
 }
+
+export const uploadHousePhotos = (house: House, files: File[]) => {
+    const fileFormData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+        fileFormData.append("files", files[i]);
+    }
+    const uploadPhotoPromise = axios.post(
+        `${process.env.REACT_APP_HOUSE_API}/houses/${house.id}/photos`,
+        fileFormData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+    console.log(uploadPhotoPromise);
+    return {
+        type: appConstants.UPDATE_USER,
+        payload: uploadPhotoPromise
+    }
+}

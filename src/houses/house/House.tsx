@@ -2,23 +2,18 @@ import React from "react";
 import {House as HouseModel} from "../../shared/model/House";
 import "./House.scss"
 import {Card, CardContent, Typography} from "@material-ui/core";
+import Image from 'material-ui-image';
 import {Link} from "react-router-dom";
 import {appConstants} from "../../shared/constants/appConstants";
 
 class House extends React.Component<HouseProps, any> {
     render() {
         return (
-            // <div className="House">
-            //     <img className="house-img" src={this.props.house.image}/>
-            //     <div className="house-info">
-            //         <h5>{this.props.house.name}</h5>
-            //         <p>{`room: ${this.props.house.room}`}</p>
-            //     </div>
-            // </div>
             <Link className="link" to={`${appConstants.houseInfoRoute}/${this.props.house.id}`}>
             <Card className="House" variant="outlined">
                     <CardContent>
-                        <img className="house-img" src={this.props.house.image} alt=""/>
+                        <Image style={{"width": "300px"}} src={this.props.house.image} aspectRatio={(16/9)}/>
+                        {/*<img className="house-img" src={this.props.house.image} alt=""/>*/}
                     </CardContent>
                     <CardContent>
                         <h4>{this.props.house.name}</h4>
@@ -40,12 +35,6 @@ class House extends React.Component<HouseProps, any> {
         );
     }
 }
-
-// function mapDispatchToProps(dispatch: Dispatch) {
-//     return bindActionCreators({
-//         // openHouseDetail
-//     }, dispatch);
-// }
 
 export default House;
 

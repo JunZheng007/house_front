@@ -19,12 +19,12 @@ const User = (props: UserProps) => {
     const rentInfos = useSelector(({rentInfos}: ReduxState) => rentInfos);
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     dispatch(checkLogin());
-    // }, [dispatch, props])
+    useEffect(() => {
+        user === null && dispatch(checkLogin());
+    }, [dispatch, user])
 
     useEffect(() => {
-        if (user === null) {
+        if (user?.id === 0) {
             props.history.push('/login')
         }
     }, [user, props])

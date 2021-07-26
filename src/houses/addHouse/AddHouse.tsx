@@ -1,5 +1,5 @@
 import React, {SyntheticEvent, useEffect, useState} from "react";
-import {Fab, InputAdornment, Paper, TextField} from "@material-ui/core";
+import {Button, Fab, InputAdornment, Paper, TextField} from "@material-ui/core";
 import HouseIcon from "@material-ui/icons/House";
 import HouseNameIcon from "@material-ui/icons/DateRange";
 import RoomIcon from "@material-ui/icons/BorderAll";
@@ -7,17 +7,19 @@ import CapacityIcon from "@material-ui/icons/CropFree";
 import StyleIcon from "@material-ui/icons/LocalOffer";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 import {House} from "../../shared/model/House";
 import "./Addhouse.scss"
 import {useDispatch, useSelector} from "react-redux";
 import {addNewHouse, updateHouse} from "../../actions/house.action";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {ReduxState} from "../../shared/constants/appConstants";
+import UploadPhoto from "../../uploadPhoto/UploadPhoto";
 
 const AddHouse = (props: AddHouseProps) => {
     const user = useSelector(({user}: ReduxState) => user);
+    const housePhotos = useSelector(({housePhotos}: ReduxState) => housePhotos);
     const editHouse = useSelector(({editHouse}: ReduxState) => editHouse);
+    const [openAddPhoto, setOpenAddPhoto] = useState(false);
     const [house, setHouse] = useState(editHouse ? editHouse :
         {
             name: '',
@@ -35,6 +37,11 @@ const AddHouse = (props: AddHouseProps) => {
     useEffect(() => {
         console.log(editHouse);
     }, [editHouse])
+
+    const handlerAddPhoto = (event: SyntheticEvent) => {
+        event.preventDefault();
+        setOpenAddPhoto(true);
+    }
 
     const handlerSubmit = (event: SyntheticEvent) => {
         event.preventDefault();
@@ -129,23 +136,16 @@ const AddHouse = (props: AddHouseProps) => {
                         )
                     }}
                 />
-                <TextField
-                    name="image"
-                    label="House Photo"
-                    className="input"
-                    onChange={handleFormControl}
-                    defaultValue={house.image}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <CropOriginalIcon/>
-                            </InputAdornment>
-                        )
-                    }}
-                />
+                <Button
+                    className="m-3"
+                    variant="contained"
+                    color="primary"
+                    onClick={handlerAddPhoto}
+                >
+                    Add house photo
+                </Button>
                 <TextField
                     name="description"
-                    className="pt-4"
                     variant="outlined"
                     autoFocus
                     multiline
@@ -169,6 +169,7 @@ const AddHouse = (props: AddHouseProps) => {
                     <ArrowForwardIcon/>
                 </Fab>
             </form>
+            <UploadPhoto open={openAddPhoto} close={() => setOpenAddPhoto(false)} photoType="house"/>
         </Paper>
     )
 }

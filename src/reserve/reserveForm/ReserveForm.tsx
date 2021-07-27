@@ -19,7 +19,7 @@ class ReserveForm extends React.Component<ReserveFormProps, ReserveFormState> {
         this.state = {
             checkInDate: today,
             checkOutDate: tomorrow,
-            open: false,
+            // open: false,
             isTenant: true
         }
     }
@@ -28,8 +28,9 @@ class ReserveForm extends React.Component<ReserveFormProps, ReserveFormState> {
         this.setState({
             ...this.state,
             checkInDate: date,
-            open: true
+            // open: true
         })
+        this.props.setOpen(true);
     }
 
     handleCheckOutDateChange = (date: MaterialUiPickersDate) => {
@@ -37,9 +38,10 @@ class ReserveForm extends React.Component<ReserveFormProps, ReserveFormState> {
         this.setState({
             ...this.state,
             checkOutDate: date,
-            open: !this.state.open
+            // open: !this.state.open
         });
-        console.log(this.state);
+        this.props.setOpen(!this.props.open);
+        console.log(this.props.open);
     }
 
     handleCheckOutDateClick = (event: SyntheticEvent) => {
@@ -48,8 +50,9 @@ class ReserveForm extends React.Component<ReserveFormProps, ReserveFormState> {
         if (element.id === 'check-out') {
             this.setState({
                 ...this.state,
-                open: true
+                // open: true
             })
+            this.props.setOpen(true);
         }
     }
 
@@ -58,7 +61,7 @@ class ReserveForm extends React.Component<ReserveFormProps, ReserveFormState> {
         return new Date(checkIn.getFullYear(), checkIn.getMonth(), checkIn.getDate() + 1);
     }
 
-    handleSubmitReserve = (event: SyntheticEvent) => {
+    handleSubmitReserve = () => {
         const tenant = this.props.user;
         if (tenant && tenant.type === 'tenant') {
             const rentInfo = {
@@ -123,7 +126,7 @@ class ReserveForm extends React.Component<ReserveFormProps, ReserveFormState> {
                                 margin="normal"
                                 id="check-out"
                                 label="CHECK-OUT"
-                                open={this.state.open}
+                                open={this.props.open}
                                 minDate={this.minCheckOutDate()}
                                 value={this.state.checkOutDate}
                                 onChange={this.handleCheckOutDateChange}
@@ -160,6 +163,8 @@ interface ReserveFormProps {
     user: User,
     house: House,
     rentInfos: RentInfo[],
+    open: boolean,
+    setOpen: (state: boolean) => void,
     addRentInfo: (rentInfo: RentInfo) => object,
     goToUser: () => void
 }
@@ -167,6 +172,6 @@ interface ReserveFormProps {
 interface ReserveFormState {
     checkInDate: MaterialUiPickersDate,
     checkOutDate: MaterialUiPickersDate,
-    open: boolean | undefined,
+    // open: boolean | undefined,
     isTenant: boolean | undefined
 }

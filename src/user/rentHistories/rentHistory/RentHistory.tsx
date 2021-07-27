@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useState} from "react";
+import React, {useState} from "react";
 import './RentHistory.scss'
 import {Button, Grid, Paper, Typography} from "@material-ui/core";
 import {RentInfo} from "../../../shared/model/RentInfo";
@@ -6,18 +6,17 @@ import {useDispatch} from "react-redux";
 import CancelDialog from "./CancelDialog";
 import {deleteRentInfo} from "../../../actions/rent.action";
 import FeedbackDialog from "./FeedbackDialog";
-import Image from "material-ui-image";
 
 const RentHistory = (props: RentHistoryProps) => {
     const [feedback, setFeedback] = useState(false);
     const [cancel, setCancel] = useState(false);
     const dispatch = useDispatch();
 
-    const handleFeedback = (event: SyntheticEvent) => {
+    const handleFeedback = () => {
         setFeedback(true);
     }
 
-    const handleCancel = (event: SyntheticEvent) => {
+    const handleCancel = () => {
         setCancel(true);
     }
 
@@ -41,7 +40,7 @@ const RentHistory = (props: RentHistoryProps) => {
             >
                 <Grid item md={4} className="house-image d-flex flex-column align-items-center justify-content-center">
                     {/*<Image className="image" alt="house" src={props.info.house.image} aspectRatio={(16/9)}/>*/}
-                    <img src={props.info.house.image} className="image" alt="house"/>
+                    <img src={props.info.house.photos[0].path} className="image" alt="house"/>
                 </Grid>
                 <Grid item md={4} className="house-name d-flex flex-column align-items-center justify-content-center">
                     <Typography variant="h6" className="text-center">{props.info.house.name} </Typography>

@@ -15,7 +15,15 @@ export const houseReducer = (state: Pageable<House> | null = null, action: House
             }
             return state;
         case appConstants.DELETE_HOUSE:
-            return state?.content.filter(info => info !== action.house);
+            // state!.content = state!.content.filter(info => info !== action.house);
+            console.log(state);
+            return {
+                ...state,
+                content: state?.content.filter(info => info !== action.house),
+                size: state!.size - 1,
+                numberOfElements: state!.numberOfElements - 1,
+                totalElements: state!.totalElements - 1
+            }
         default:
             return state;
     }

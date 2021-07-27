@@ -1,5 +1,5 @@
 import './HouseInfo.scss';
-import React from "react";
+import React, {SyntheticEvent} from "react";
 import {Card, CardMedia, Paper} from "@material-ui/core";
 import {House} from "../../shared/model/House";
 import {RentInfo} from "../../shared/model/RentInfo";
@@ -16,8 +16,10 @@ import {getReviewsByHouseIdOfPage} from "../../actions/review.action";
 import {User} from "../../shared/model/User";
 import {checkLogin} from "../../actions/user.action";
 import Pageable from "../../shared/model/Pageable";
+import Carousel from "react-material-ui-carousel";
+import {HouseFile} from "../../shared/model/HouseFile";
 
-class HouseInfo extends React.Component<HouseInfoProps, any> {
+class HouseInfo extends React.Component<HouseInfoProps, HouseInfoState> {
 
     constructor(props: HouseInfoProps) {
         super(props);
@@ -25,6 +27,9 @@ class HouseInfo extends React.Component<HouseInfoProps, any> {
         props.getRentInfoByHouseId(+props.match.params.id);
         props.getReviewsByHouseIdOfPage(+props.match.params.id, 0);
         props.checkLogin();
+        this.state = {
+            datePickerOpen: false
+        }
     }
 
     componentDidMount() {
@@ -37,19 +42,32 @@ class HouseInfo extends React.Component<HouseInfoProps, any> {
         this.props.history.push('/user');
     }
 
+    handleClick = (event: SyntheticEvent) => {
+        const element = event.target as HTMLDivElement;
+        element.getAttribute('aria-hidden') && this.setState({datePickerOpen: false})
+        console.log(this.state);
+    }
+
+    setOpen = (open: boolean) => {
+        this.setState({datePickerOpen: open});
+    }
+
     render() {
-        console.log(this.props);
+        console.log(this.state);
         return (
             this.props.house && this.props.rentInfos && this.props.reviews ?
-                <Paper className="house-info" elevation={5}>
+                <Paper className="house-info" elevation={5} onClick={this.handleClick}>
                     <h2>{this.props.house.name}</h2>
-                    <Card className='image-card' elevation={10}>
-                        <CardMedia
-                            className="house-img"
-                            image={this.props.house.image}
-                            title={`${this.props.house.name}`}
-                        />
-                    </Card>
+                    {/*<Card className='image-card' elevation={10}>*/}
+                    {/*    <CardMedia*/}
+                    {/*        className="house-img"*/}
+                    {/*        image={this.props.house.photos[0].path}*/}
+                    {/*        title={`${this.props.house.name}`}*/}
+                    {/*    />*/}
+                    {/*</Card>*/}
+                    <Carousel className="image-card" animation="slide">
+                        {this.props.house.photos.map((photo, i) => <HousePhoto photo={photo} key={i}/>)}
+                    </Carousel>
                     <div className="description-reserve">
                         <HouseDescription classname="description" description={this.props.house.description}/>
                         <ReserveForm
@@ -58,6 +76,8 @@ class HouseInfo extends React.Component<HouseInfoProps, any> {
                             house={this.props.house}
                             rentInfos={this.props.rentInfos}
                             goToUser={this.goToUser}
+                            open={this.state.datePickerOpen}
+                            setOpen={this.setOpen}
                         />
                     </div>
                     <Reviews house_id={this.props.house.id} reviews={this.props.reviews}/>
@@ -78,7 +98,12 @@ function mapStateToProps({user, house, rentInfos, reviews}: ReduxState, ownProps
     } as HouseInfoProps;
 }
 
-export default connect(mapStateToProps, {checkLogin, getHouseById, getRentInfoByHouseId, getReviewsByHouseIdOfPage})(HouseInfo);
+export default connect(mapStateToProps, {
+    checkLogin,
+    getHouseById,
+    getRentInfoByHouseId,
+    getReviewsByHouseIdOfPage
+})(HouseInfo);
 
 interface HouseInfoProps extends RouteComponentProps<{ id: string }> {
     user: User,
@@ -89,4 +114,23 @@ interface HouseInfoProps extends RouteComponentProps<{ id: string }> {
     getHouseById: (id: number) => object,
     getRentInfoByHouseId: (id: number) => object,
     getReviewsByHouseIdOfPage: (house_id: number, page: number) => object
+}
+
+interface HouseInfoState {
+    datePickerOpen: boolean
+}
+
+const HousePhoto = (props: HousePhotoProps) => {
+    return (
+        <Card elevation={10}>
+            <CardMedia
+                className="house-img"
+                image={props.photo.path}
+            />
+        </Card>
+    )
+}
+
+interface HousePhotoProps {
+    photo: HouseFile
 }

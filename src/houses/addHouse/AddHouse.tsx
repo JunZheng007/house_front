@@ -14,10 +14,11 @@ import {addNewHouse, updateHouse} from "../../actions/house.action";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {ReduxState} from "../../shared/constants/appConstants";
 import UploadPhoto from "../../uploadPhoto/UploadPhoto";
+import {editHousePhotos} from "../../actions/houseFile.action";
 
 const AddHouse = (props: AddHouseProps) => {
     const user = useSelector(({user}: ReduxState) => user);
-    const housePhotos = useSelector(({housePhotos}: ReduxState) => housePhotos);
+    // const housePhotos = useSelector(({housePhotos}: ReduxState) => housePhotos);
     const editHouse = useSelector(({editHouse}: ReduxState) => editHouse);
     const [openAddPhoto, setOpenAddPhoto] = useState(false);
     const [house, setHouse] = useState(editHouse ? editHouse :
@@ -27,7 +28,6 @@ const AddHouse = (props: AddHouseProps) => {
             capacity: null,
             style: '',
             address: '',
-            image: '',
             description: '',
             owner: user
         } as House
@@ -40,6 +40,7 @@ const AddHouse = (props: AddHouseProps) => {
 
     const handlerAddPhoto = (event: SyntheticEvent) => {
         event.preventDefault();
+        dispatch(editHousePhotos(editHouse ? editHouse.photos : null));
         setOpenAddPhoto(true);
     }
 
@@ -142,7 +143,7 @@ const AddHouse = (props: AddHouseProps) => {
                     color="primary"
                     onClick={handlerAddPhoto}
                 >
-                    Add house photo
+                    {`${editHouse ? "Edit" : "Add"} house photo`}
                 </Button>
                 <TextField
                     name="description"

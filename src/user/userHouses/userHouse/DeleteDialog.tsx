@@ -1,4 +1,4 @@
-import React from "react";
+import React, {SyntheticEvent} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
 
 const DeleteDialog = (props: DeleteDialogProps) => {
@@ -34,5 +34,5 @@ export default DeleteDialog;
 interface DeleteDialogProps {
     open: boolean,
     close: () => void,
-    delete: () => void
+    delete: (event: SyntheticEvent) => void
 }

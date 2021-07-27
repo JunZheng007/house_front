@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {Button, Grid, Paper, Typography} from "@material-ui/core";
 import {House as HouseModel} from "../../../shared/model/House";
 import {useDispatch} from "react-redux";
@@ -58,6 +58,10 @@ const UserHouse = (props: UserHouseProps) => {
         dispatch(deleteHouse(props.house));
     }
 
+    const openHouseInfo = () => {
+        props.history.push(`/house-detail/${props.house.id}`)
+    }
+
     return (
         <Paper className="rent-history" elevation={4}>
             <Grid
@@ -66,17 +70,21 @@ const UserHouse = (props: UserHouseProps) => {
                 justifyContent="space-around"
                 className="rent-history"
             >
-                <Grid item md={4} className="house-image d-flex flex-column align-items-center justify-content-center">
-                    <img src={props.house.image} className="image" alt="house"/>
+                <Grid item md={4}
+                      onClick={openHouseInfo}
+                      className="house-image d-flex flex-column align-items-center justify-content-center">
+                    <img src={props.house.photos[0].path} className="image" alt="house"/>
                 </Grid>
-                <Grid item md={4} className="house-name d-flex flex-column align-items-center justify-content-center">
+                <Grid item md={4}
+                      onClick={openHouseInfo}
+                      className="house-name d-flex flex-column align-items-center justify-content-center">
                     <Typography variant="h6" className="text-center">{props.house.name} </Typography>
                     <Typography className="text-center">Rooms: {props.house.room}</Typography>
                     <Typography className="text-center">Capacity: {props.house.capacity}</Typography>
                     <Typography className="text-center">Styles: {props.house.style}</Typography>
                     <Typography className="text-center">Rank: {props.house.rank}</Typography>
                 </Grid>
-                <Grid item className="d-flex flex-column align-items-center justify-content-center" md={2}>
+                <Grid item className="d-flex flex-column align-items-center justify-content-center" md={3}>
                     <Button
                         variant="outlined"
                         color="primary"
@@ -112,5 +120,6 @@ const UserHouse = (props: UserHouseProps) => {
 export default withRouter(UserHouse);
 
 interface UserHouseProps extends RouteComponentProps {
-    house: HouseModel
+    house: HouseModel,
+    changePage: (event: ChangeEvent<unknown>, page: number) => void
 }

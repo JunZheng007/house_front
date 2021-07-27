@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useState} from "react";
+import React, {useState} from "react";
 import "./Review.scss"
 import {Button, Grid, Paper, Typography} from "@material-ui/core";
 import {Review as ReviewModel} from "../../../shared/model/Review";
@@ -14,11 +14,11 @@ const Review = (props: ReviewProps) => {
     const user = useSelector(({user}: ReduxState) => user);
     const dispatch = useDispatch();
 
-    const handleEdit = (event: SyntheticEvent) => {
+    const handleEdit = () => {
         setEditDialog(true);
     }
 
-    const handleDelete = (event: SyntheticEvent) => {
+    const handleDelete = () => {
         setDeleteDialog(true);
     }
 
@@ -40,7 +40,7 @@ const Review = (props: ReviewProps) => {
                 className="user-review"
             >
                 <Grid item md={2} className="house-image d-flex flex-column align-items-center justify-content-center">
-                    <img src={props.review.house.image} className="image" alt="house"/>
+                    <img src={props.review.house.photos[0].path} className="image" alt="house"/>
                 </Grid>
                 <Grid item md={8} className="align-items-center justify-content-center">
                     <Grid

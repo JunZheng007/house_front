@@ -55,7 +55,8 @@ export const deleteHouse = (house: House) => {
     console.log(deleteHousePromise);
     return {
         type: appConstants.DELETE_HOUSE,
-        payload: deleteHousePromise
+        payload: deleteHousePromise,
+        house: house
     }
 }
 

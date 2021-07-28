@@ -17,26 +17,29 @@ import Login from './login/Login';
 import Registration from "./registration/Registration";
 import AddHouse from "./houses/addHouse/AddHouse";
 import User from './user/User';
+import {CookiesProvider} from "react-cookie";
 
 const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(rootReducer)}>
-      <BrowserRouter>
-          <App>
-              <Switch>
-                  <Route path={appConstants.userRoute} component={User}/>
-                  <Route path={appConstants.loginRoute} component={Login}/>
-                  <Route path={appConstants.registrationRoute} component={Registration}/>
-                  <Route path={`${appConstants.houseInfoRoute}/:id`} component={HouseInfo}/>
-                  <Route path={appConstants.addHousesRoute} component={AddHouse}/>
-                  <Route path={appConstants.editHousesRoute} component={AddHouse}/>
-                  <Route path={appConstants.housesRoute} component={Houses}/>
-              </Switch>
-          </App>
-      </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={createStoreWithMiddleware(rootReducer)}>
+        <CookiesProvider>
+            <BrowserRouter>
+                <App>
+                    <Switch>
+                        <Route path={appConstants.userRoute} component={User}/>
+                        <Route path={appConstants.loginRoute} component={Login}/>
+                        <Route path={appConstants.registrationRoute} component={Registration}/>
+                        <Route path={`${appConstants.houseInfoRoute}/:id`} component={HouseInfo}/>
+                        <Route path={appConstants.addHousesRoute} component={AddHouse}/>
+                        <Route path={appConstants.editHousesRoute} component={AddHouse}/>
+                        <Route path={appConstants.housesRoute} component={Houses}/>
+                    </Switch>
+                </App>
+            </BrowserRouter>
+        </CookiesProvider>
+    </Provider>,
+    document.getElementById('root')
 );
 
 reportWebVitals();

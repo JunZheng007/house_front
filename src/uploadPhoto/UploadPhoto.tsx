@@ -24,7 +24,7 @@ const UploadPhoto = (props: ProfilePhotoProps) => {
             acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
             dropzoneText="Drag and drop a photo here or click"
             submitButtonText="Save"
-            initialFiles={photos}
+            // initialFiles={photos}
             showPreviews={true}
             maxFileSize={5000000}
             onClose={props.close}

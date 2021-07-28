@@ -6,14 +6,17 @@ import {ReduxState} from "./shared/constants/appConstants";
 import {checkLogin} from "./actions/user.action";
 import {Snackbar} from "@material-ui/core";
 import {setIsLogin, setIsLogout} from "./actions/flag.action";
+import {useCookies} from "react-cookie";
 
 function App(props: any) {
     const user = useSelector(({user}: ReduxState) => user);
     const flags = useSelector(({flags}: ReduxState) => flags);
+    const [cookies, setCookie] = useCookies();
     const dispatch = useDispatch();
 
     useEffect(() => {
         user === null && dispatch(checkLogin());
+        console.log(cookies);
     }, [dispatch, user])
 
     return (

@@ -13,25 +13,19 @@ const UserHouses = (props: UserHousesProps) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (houses?.numberOfElements === 0) {
-            setTimeout(() => {
-                dispatch(getHousesByOwnerIdOfPage(props.user_id, 0));
-                setPage(1);
-            }, 500);
-        }
+        // if (houses?.numberOfElements === 0) {
+        //     setTimeout(() => {
+        //         dispatch(getHousesByOwnerIdOfPage(props.userId, 0));
+        //         setPage(1);
+        //     }, 500);
+        // }
+        houses === null && dispatch(getHousesByOwnerIdOfPage(props.userId, 0));
         console.log(houses);
-    }, [houses, dispatch,props.user_id])
+    }, [houses, dispatch,props.userId])
 
     const handleChangePage = (event: ChangeEvent<unknown>, page: number) => {
         setPage(page);
-        dispatch(getHousesByOwnerIdOfPage(props.user_id, page - 1));
-    }
-
-    const handleAddHouse = () => {
-        dispatch({
-            type: appConstants.CLEAN_EDIT_HOUSE,
-            payload: null
-        })
+        dispatch(getHousesByOwnerIdOfPage(props.userId, page - 1));
     }
 
     return (
@@ -44,7 +38,7 @@ const UserHouses = (props: UserHousesProps) => {
                     </Typography>
             }
             <Typography className="text-center">
-                <Link to={appConstants.addHousesRoute} onClick={handleAddHouse}>Add New House</Link>
+                <Link to={appConstants.addHousesRoute}>Add New House</Link>
             </Typography>
             <Pagination
                 className="m-3"
@@ -63,5 +57,5 @@ export default UserHouses;
 
 interface UserHousesProps {
     className: string,
-    user_id: number
+    userId: number
 }

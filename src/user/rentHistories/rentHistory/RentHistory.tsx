@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 import CancelDialog from "./CancelDialog";
 import {deleteRentInfo} from "../../../actions/rent.action";
 import FeedbackDialog from "./FeedbackDialog";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
 const RentHistory = (props: RentHistoryProps) => {
     const [feedback, setFeedback] = useState(false);
@@ -30,6 +31,10 @@ const RentHistory = (props: RentHistoryProps) => {
         setCancel(false);
     }
 
+    const openHouseInfo = () => {
+        props.history.push(`/house-detail/${props.info.house.id}`)
+    }
+
     return (
         <Paper className="rent-history" elevation={4}>
             <Grid
@@ -38,14 +43,19 @@ const RentHistory = (props: RentHistoryProps) => {
                 justifyContent="space-around"
                 className="rent-history"
             >
-                <Grid item md={4} className="house-image d-flex flex-column align-items-center justify-content-center">
-                    {/*<Image className="image" alt="house" src={props.info.house.image} aspectRatio={(16/9)}/>*/}
-                    <img src={props.info.house.photos[0].path} className="image" alt="house"/>
+                <Grid item md={4}
+                      onClick={openHouseInfo}
+                      className="house-image d-flex flex-column align-items-center justify-content-center">
+                    <img src={props.info.house.image} className="image" alt="house"/>
                 </Grid>
-                <Grid item md={4} className="house-name d-flex flex-column align-items-center justify-content-center">
+                <Grid item md={4}
+                      onClick={openHouseInfo}
+                      className="house-name d-flex flex-column align-items-center justify-content-center">
                     <Typography variant="h6" className="text-center">{props.info.house.name} </Typography>
-                    <Typography className="text-center">Enter Date: {new Date(props.info.enterDate).toDateString()}</Typography>
-                    <Typography className="text-center">Leave Date: {new Date(props.info.leaveDate).toDateString()}</Typography>
+                    <Typography className="text-center">Enter
+                        Date: {new Date(props.info.enterDate).toDateString()}</Typography>
+                    <Typography className="text-center">Leave
+                        Date: {new Date(props.info.leaveDate).toDateString()}</Typography>
                 </Grid>
                 <Grid item className="d-flex flex-column align-items-center justify-content-center" md={2}>
                     <Button
@@ -74,8 +84,8 @@ const RentHistory = (props: RentHistoryProps) => {
     )
 }
 
-export default RentHistory;
+export default withRouter(RentHistory);
 
-interface RentHistoryProps {
+interface RentHistoryProps extends RouteComponentProps {
     info: RentInfo
 }

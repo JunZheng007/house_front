@@ -36,6 +36,7 @@ class HouseInfo extends React.Component<HouseInfoProps, HouseInfoState> {
         this.props.house === null && this.props.getHouseById(+this.props.match.params.id);
         this.props.rentInfos === null && this.props.getRentInfoByHouseId(+this.props.match.params.id);
         this.props.reviews === null && this.props.getReviewsByHouseIdOfPage(+this.props.match.params.id, 0);
+        this.props.house?.photos.sort((a, b) => b.id - a.id);
     }
 
     goToUser = () => {
@@ -45,7 +46,6 @@ class HouseInfo extends React.Component<HouseInfoProps, HouseInfoState> {
     handleClick = (event: SyntheticEvent) => {
         const element = event.target as HTMLDivElement;
         element.getAttribute('aria-hidden') && this.setState({datePickerOpen: false})
-        console.log(this.state);
     }
 
     setOpen = (open: boolean) => {
@@ -53,18 +53,10 @@ class HouseInfo extends React.Component<HouseInfoProps, HouseInfoState> {
     }
 
     render() {
-        console.log(this.state);
         return (
             this.props.house && this.props.rentInfos && this.props.reviews ?
                 <Paper className="house-info" elevation={5} onClick={this.handleClick}>
                     <h2>{this.props.house.name}</h2>
-                    {/*<Card className='image-card' elevation={10}>*/}
-                    {/*    <CardMedia*/}
-                    {/*        className="house-img"*/}
-                    {/*        image={this.props.house.photos[0].path}*/}
-                    {/*        title={`${this.props.house.name}`}*/}
-                    {/*    />*/}
-                    {/*</Card>*/}
                     <Carousel className="image-card" animation="slide">
                         {this.props.house.photos.map((photo, i) => <HousePhoto photo={photo} key={i}/>)}
                     </Carousel>
@@ -89,7 +81,7 @@ class HouseInfo extends React.Component<HouseInfoProps, HouseInfoState> {
 
 function mapStateToProps({user, house, rentInfos, reviews}: ReduxState, ownProps: HouseInfoProps) {
     const id = +ownProps.match.params.id;
-    const rentInfoOfHouse = rentInfos?.filter(info => info.house.id === id);
+    const rentInfoOfHouse = rentInfos?.content.filter(info => info.house.id === id);
     return {
         user: user ? user : null,
         house: house ? house : null,

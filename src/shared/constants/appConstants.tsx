@@ -21,6 +21,7 @@ export const appConstants = {
     ADD_HOUSE: 'ADD_HOUSE',
     UPDATE_HOUSE: 'UPDATE_HOUSE',
     DELETE_HOUSE: 'DELETE_HOUSE',
+    UPLOAD_HOUSE_PHOTOS: 'UPLOAD_HOUSE_PHOTOS',
     GET_RENT_INFOS: 'GET_RENT_INFOS',
     GET_RENT_INFO_BY_HOUSE_ID: 'GET_RENT_INFO_BY_HOUSE_ID',
     GET_RENT_INFO_BY_TENANT_ID: 'GET_RENT_INFO_BY_TENANT_ID',
@@ -41,8 +42,9 @@ export const appConstants = {
     EDIT_HOUSE: 'EDIT_HOUSE',
     CLEAN_EDIT_HOUSE: 'CLEAN_EDIT_HOUSE',
     ADD_HOUSE_PHOTOS: 'ADD_HOUSE_PHOTOS',
-    ADD_NEW_HOUSE: 'ADD_NEW_HOUSE',
-    EDIT_HOUSE_PHOTOS: 'EDIT_HOUSE_PHOTOS'
+    EDIT_HOUSE_PHOTOS: 'EDIT_HOUSE_PHOTOS',
+    CLEAN_HOUSE_PHOTOS: 'CLEAN_HOUSE_PHOTOS',
+    DELETE_PHOTO: 'DELETE_PHOTO'
 
 }
 
@@ -50,7 +52,7 @@ export interface ReduxState {
     user: User,
     house: House,
     houses: Pageable<House>,
-    rentInfos: RentInfo[],
+    rentInfos: Pageable<RentInfo>,
     reviews: Pageable<Review>,
     flags: Flags,
     editHouse: House,

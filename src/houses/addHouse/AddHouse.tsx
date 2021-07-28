@@ -1,5 +1,5 @@
 import React, {SyntheticEvent, useEffect, useState} from "react";
-import {Button, Fab, InputAdornment, Paper, TextField} from "@material-ui/core";
+import {Button, Fab, InputAdornment, Paper, Snackbar, TextField} from "@material-ui/core";
 import HouseIcon from "@material-ui/icons/House";
 import HouseNameIcon from "@material-ui/icons/DateRange";
 import RoomIcon from "@material-ui/icons/BorderAll";
@@ -10,16 +10,17 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import {House} from "../../shared/model/House";
 import "./Addhouse.scss"
 import {useDispatch, useSelector} from "react-redux";
-import {addNewHouse, updateHouse} from "../../actions/house.action";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {ReduxState} from "../../shared/constants/appConstants";
+import {appConstants, ReduxState} from "../../shared/constants/appConstants";
 import UploadPhoto from "../../uploadPhoto/UploadPhoto";
-import {editHousePhotos} from "../../actions/houseFile.action";
+import MuiAlert from "@material-ui/lab/Alert";
+import {addNewHouse, updateHouse} from "../../actions/house.action";
 
 const AddHouse = (props: AddHouseProps) => {
-    const user = useSelector(({user}: ReduxState) => user);
-    // const housePhotos = useSelector(({housePhotos}: ReduxState) => housePhotos);
+    const housePhotos = useSelector(({housePhotos}: ReduxState) => housePhotos);
     const editHouse = useSelector(({editHouse}: ReduxState) => editHouse);
+    const [notFill, setNotFill] = useState(false);
+    const [noPhoto, setNoPhoto] = useState(false);
     const [openAddPhoto, setOpenAddPhoto] = useState(false);
     const [house, setHouse] = useState(editHouse ? editHouse :
         {
@@ -28,30 +29,32 @@ const AddHouse = (props: AddHouseProps) => {
             capacity: null,
             style: '',
             address: '',
-            description: '',
-            owner: user
+            description: ''
         } as House
     );
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        console.log(editHouse);
-    }, [editHouse])
-
     const handlerAddPhoto = (event: SyntheticEvent) => {
         event.preventDefault();
-        dispatch(editHousePhotos(editHouse ? editHouse.photos : null));
         setOpenAddPhoto(true);
     }
 
     const handlerSubmit = (event: SyntheticEvent) => {
         event.preventDefault();
-        setHouse({
-            ...house,
-            owner: user
-        });
-        console.log(house, editHouse);
-        editHouse === {} as House ? dispatch(updateHouse(house)) : dispatch(addNewHouse(house));
+        let key: (keyof House)
+        for (key in house) {
+            if (!house[key]) {
+                setNotFill(true);
+                return;
+            }
+        }
+        console.log(house);
+        console.log(housePhotos);
+        if (!housePhotos || housePhotos.length === 0) {
+            setNoPhoto(true);
+            return;
+        }
+        editHouse === {} as House ? dispatch(updateHouse(house)) : dispatch(addNewHouse(house, housePhotos));
         props.history.push("/user");
     }
 
@@ -62,6 +65,16 @@ const AddHouse = (props: AddHouseProps) => {
             [inputElement.name]: inputElement.value
         });
     }
+
+    useEffect(() => {
+        console.log(housePhotos);
+        return function cleanup () {
+            dispatch({
+                type: appConstants.CLEAN_EDIT_HOUSE,
+                payload: null
+            });
+        }
+    })
 
     return (
         <Paper className="add-house" elevation={10}>
@@ -171,6 +184,20 @@ const AddHouse = (props: AddHouseProps) => {
                 </Fab>
             </form>
             <UploadPhoto open={openAddPhoto} close={() => setOpenAddPhoto(false)} photoType="house"/>
+            <Snackbar
+                open={notFill}
+                autoHideDuration={2000}
+                onClose={() => setNotFill(false)}
+            >
+                <MuiAlert severity="error" elevation={6} variant="filled">Please fill all column!</MuiAlert>
+            </Snackbar>
+            <Snackbar
+                open={noPhoto}
+                autoHideDuration={2000}
+                onClose={() => setNoPhoto(false)}
+            >
+                <MuiAlert severity="error" elevation={6} variant="filled">Please add least one photo!</MuiAlert>
+            </Snackbar>
         </Paper>
     )
 }

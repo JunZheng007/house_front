@@ -1,9 +1,7 @@
 import {appConstants} from "../shared/constants/appConstants";
 import {House} from "../shared/model/House";
 
-const house = {} as House;
-
-export const editHouseReducer = (state: House = house, action: editHouseAction) => {
+export const editHouseReducer = (state: House | null = null, action: editHouseAction) => {
     switch (action.type) {
         case appConstants.EDIT_HOUSE:
             return action.payload;

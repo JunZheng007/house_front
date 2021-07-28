@@ -14,7 +14,7 @@ const UserProfile = (props: UserProfileProps) => {
 
     return (
         <Card className="user-profile" elevation={6}>
-            <Avatar className="avatar" sizes="48x48" src={props.user.photo}/>
+            <Avatar className="avatar" sizes="48x48" src={props.user.photo.path}/>
             <UploadPhoto open={openUpdatePhoto} close={() => setOpenUpdatePhoto(false)} photoType="user"/>
             <Typography>
                 <Link href='' onClick={updatePhoto}>Update Photo</Link>

@@ -8,10 +8,10 @@ export interface House {
     capacity: number | null,
     style: string,
     address: string,
+    image: string,
     photos: HouseFile[],
     rank: number,
     description: string,
     owner: User,
-    rentStatus: number,
-    files?: File[]
+    rentStatus: number
 }

@@ -99,7 +99,6 @@ class ReserveForm extends React.Component<ReserveFormProps, ReserveFormState> {
 
     render() {
         console.log(this.props);
-        console.log(this.state);
         return (
             <Card elevation={10} className={`${this.props.classname} reserve-form`}>
                 <CardContent>

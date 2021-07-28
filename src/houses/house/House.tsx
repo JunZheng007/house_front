@@ -13,7 +13,7 @@ class House extends React.Component<HouseProps, any> {
             <Link className="link" to={`${appConstants.houseInfoRoute}/${this.props.house.id}`}>
                 <Card className="House" variant="outlined">
                     <CardContent>
-                        <Image style={{"width": "300px"}} src={this.props.house.photos[0].path} aspectRatio={(16 / 9)}/>
+                        <Image style={{"width": "300px"}} src={this.props.house.image} aspectRatio={(16 / 9)}/>
                         {/*<img className="house-img" src={this.props.house.image} alt=""/>*/}
                     </CardContent>
                     <CardContent>

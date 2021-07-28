@@ -21,18 +21,18 @@ const UserHeader = (props: UserHeaderProps) => {
     };
 
     const handleLogout = () => {
-        dispatch(logout());
+        dispatch(logout(() => {
+                props.history?.push(appConstants.housesRoute);
+        }));
         dispatch(setIsLogout(true));
-        setTimeout(() => {
-            props.history?.push(appConstants.housesRoute)
-        }, 2000);
+
 
     }
 
     return (
         <div className="user-header">
             <Fab size='small' onClick={handleClick}>
-                <Avatar src={props.user?.photo}/>
+                <Avatar src={props.user?.photo.path}/>
             </Fab>
             <Menu
                 id="menu"
@@ -49,7 +49,7 @@ const UserHeader = (props: UserHeaderProps) => {
                     <Link className="link" to={appConstants.userRoute}>My Account</Link>
                 </MenuItem>
                 <MenuItem className="menu-item" onClick={handleLogout}>
-                    <Link className="link" to={appConstants.housesRoute}>Logout</Link>
+                    <h6 className="link-primary">Logout</h6>
                 </MenuItem>
             </Menu>
         </div>

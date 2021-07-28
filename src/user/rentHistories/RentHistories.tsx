@@ -1,42 +1,30 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect} from "react";
 import "./RentHistories.scss"
 import {Typography} from "@material-ui/core";
-import {RentInfo} from "../../shared/model/RentInfo";
 import RentHistory from "./rentHistory/RentHistory";
 import Pagination from "@material-ui/lab/Pagination";
-import Pageable from "../../shared/model/Pageable";
+import {useDispatch, useSelector} from "react-redux";
+import {ReduxState} from "../../shared/constants/appConstants";
+import {getRentInfoByTenantIdOfPage} from "../../actions/rent.action";
 
 const RentHistories = (props: RentHistoriesProps) => {
-    const [rentInfoPage, setRentInfoPage] = useState({
-        content: props.rentInfos ? props.rentInfos.slice(0, 2) : undefined,
-        empty: props.rentInfos ? props.rentInfos.length === 0 : true,
-        totalElements: props.rentInfos ? props.rentInfos.length : 0,
-        totalPages: props.rentInfos ? Math.ceil(props.rentInfos.length / 2) : 0
-    } as Pageable<RentInfo>)
+    const rentInfos = useSelector(({rentInfos}: ReduxState) => rentInfos);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if (props.rentInfos) {
-            props.rentInfos
-                .sort((info1, info2) => {
-                    const date1 = Date.parse(info1.enterDate.toString());
-                    const date2 = Date.parse(info2.enterDate.toString());
-                    return date2 - date1;
-                });
-        }
-    }, [props.rentInfos])
+        console.log(rentInfos);
+        rentInfos === null && dispatch(getRentInfoByTenantIdOfPage(props.userId, 0))
+    })
 
     const handleChangePage = (event: ChangeEvent<unknown>, page: number) => {
-        setRentInfoPage({
-            ...rentInfoPage,
-            content: props.rentInfos.slice((page - 1) * 2, page * 2)
-        });
+        dispatch(getRentInfoByTenantIdOfPage(props.userId, page - 1))
     }
 
     return (
         <div className="rent-info d-flex flex-column align-items-center">
             {
-                props.rentInfos && !rentInfoPage.empty ?
-                    rentInfoPage.content
+                rentInfos && !rentInfos.empty ?
+                    rentInfos.content
                         .map(info => <RentHistory info={info} key={info.id}/>) :
                     <Typography className="text-center">
                         You did not rent any house yet.
@@ -44,7 +32,7 @@ const RentHistories = (props: RentHistoriesProps) => {
             }
             <Pagination
                 className="m-3"
-                count={rentInfoPage.totalPages}
+                count={rentInfos?.totalPages}
                 color="primary"
                 showFirstButton
                 showLastButton
@@ -58,5 +46,5 @@ export default RentHistories;
 
 interface RentHistoriesProps {
     className: string,
-    rentInfos: RentInfo[]
+    userId: number
 }

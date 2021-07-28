@@ -17,7 +17,7 @@ function App(props: any) {
     useEffect(() => {
         user === null && dispatch(checkLogin());
         console.log(cookies);
-    }, [dispatch, user])
+    }, [user, dispatch, cookies])
 
     return (
         <div className="App">

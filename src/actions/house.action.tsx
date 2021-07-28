@@ -30,9 +30,13 @@ export const getHouseById = (id: number) => {
     }
 }
 
-export const addNewHouse = (house: House) => {
+export const addNewHouse = (house: House, files: File[]) => {
     const addNewHousePromise = axios.post(`${process.env.REACT_APP_HOUSE_API}/houses`, house);
     console.log(addNewHousePromise);
+    addNewHousePromise.then((res) => {
+        console.log(res.data);
+        uploadHousePhotos(res.data, files);
+    })
     return {
         type: appConstants.ADD_HOUSE,
         payload: addNewHousePromise,
@@ -60,13 +64,13 @@ export const deleteHouse = (house: House) => {
     }
 }
 
-export const uploadHousePhotos = (house: House, files: File[]) => {
+export const uploadHousePhotos = (id: number, files: File[]) => {
     const fileFormData = new FormData();
     for (let i = 0; i < files.length; i++) {
         fileFormData.append("files", files[i]);
     }
     const uploadPhotoPromise = axios.post(
-        `${process.env.REACT_APP_HOUSE_API}/houses/${house.id}/photos`,
+        `${process.env.REACT_APP_HOUSE_API}/houses/${id}/photos`,
         fileFormData,
         {
             headers: {
@@ -75,7 +79,7 @@ export const uploadHousePhotos = (house: House, files: File[]) => {
         });
     console.log(uploadPhotoPromise);
     return {
-        type: appConstants.UPDATE_USER,
+        type: appConstants.UPLOAD_HOUSE_PHOTOS,
         payload: uploadPhotoPromise
     }
 }

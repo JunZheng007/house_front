@@ -47,12 +47,13 @@ export const checkLogin = () => {
     }
 }
 
-export const logout = () => {
-    const checkLogoutPromise = axios.get(`${process.env.REACT_APP_HOUSE_API}/logout`);
-    console.log(checkLogoutPromise);
+export const logout = (succeed: () => void) => {
+    const logoutPromise = axios.post(`${process.env.REACT_APP_HOUSE_API}/logout`);
+    logoutPromise.then(() => succeed());
+    console.log(logoutPromise);
     return {
         type: appConstants.LOGOUT,
-        payload: checkLogoutPromise
+        payload: logoutPromise
     }
 }
 

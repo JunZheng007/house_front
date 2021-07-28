@@ -20,8 +20,8 @@ export const getRentInfoByHouseId = (houseId: number) => {
     }
 }
 
-export const getRentInfoByTenantId = (tenantId: number) => {
-    const getRentInfoByTenantIdPromise = axios.get(`${process.env.REACT_APP_HOUSE_API}/rent-infos/tenant/${tenantId}`);
+export const getRentInfoByTenantIdOfPage = (tenantId: number, page: number) => {
+    const getRentInfoByTenantIdPromise = axios.get(`${process.env.REACT_APP_HOUSE_API}/rent-infos/tenant/${tenantId}/${page}`);
     console.log(getRentInfoByTenantIdPromise);
     return {
         type: appConstants.GET_RENT_INFO_BY_TENANT_ID,

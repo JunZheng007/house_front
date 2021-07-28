@@ -3,9 +3,9 @@ import "./User.scss"
 import {AppBar, Box, Paper, Tab, Tabs} from "@material-ui/core";
 import UserProfile from "./userProfile/UserProfile";
 import {useDispatch, useSelector} from "react-redux";
-import {ReduxState} from "../shared/constants/appConstants";
+import {appConstants, ReduxState} from "../shared/constants/appConstants";
 import RentHistories from "./rentHistories/RentHistories";
-import {getRentInfoByTenantId} from "../actions/rent.action";
+import {getRentInfoByTenantIdOfPage} from "../actions/rent.action";
 import Reviews from "./reviews/Reviews";
 import {getReviewsByUserIdOfPage} from "../actions/review.action";
 import UserHouses from "./userHouses/UserHouses";
@@ -16,8 +16,13 @@ import {checkLogin} from "../actions/user.action";
 const User = (props: UserProps) => {
     const [value, setValue] = React.useState(0);
     const user = useSelector(({user}: ReduxState) => user);
-    const rentInfos = useSelector(({rentInfos}: ReduxState) => rentInfos);
+    // const rentInfos = useSelector(({rentInfos}: ReduxState) => rentInfos);
     const dispatch = useDispatch();
+
+    dispatch({
+        type: appConstants.CLEAN_HOUSE_PHOTOS,
+        payload: null
+    })
 
     useEffect(() => {
         user === null && dispatch(checkLogin());
@@ -31,7 +36,7 @@ const User = (props: UserProps) => {
 
     useEffect(() => {
         if (user && user.type === 'tenant') {
-            dispatch(getRentInfoByTenantId(user.id!));
+            dispatch(getRentInfoByTenantIdOfPage(user.id!, 0));
             dispatch(getReviewsByUserIdOfPage(0));
         }
     }, [dispatch, user])
@@ -71,8 +76,8 @@ const User = (props: UserProps) => {
                 <TabPanel value={value} index={0}>
                     {
                         user.type === 'owner' ?
-                            <UserHouses className="info" user_id={user.id!}/> :
-                            <RentHistories className="info" rentInfos={rentInfos}/>
+                            <UserHouses className="info" userId={user.id!}/> :
+                            <RentHistories className="info" userId={user.id!}/>
                     }
                 </TabPanel>
                 <TabPanel value={value} index={1}>

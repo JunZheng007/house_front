@@ -7,10 +7,11 @@ import DeleteDialog from "./DeleteDialog";
 import RentStatusDialog from "./RentStatusDialog";
 import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import {appConstants} from "../../../shared/constants/appConstants";
+import {editHousePhotos} from "../../../actions/houseFile.action";
 
 const UserHouse = (props: UserHouseProps) => {
     const [rentStatus, setRentStatus] = useState({
-        text: 'Off Rent',
+        text: props.house.rentStatus ? 'On Rent' : 'Off Rent',
         dialog: false
     });
     const [del, setDel] = useState(false);
@@ -20,7 +21,8 @@ const UserHouse = (props: UserHouseProps) => {
         dispatch({
             type: appConstants.EDIT_HOUSE,
             payload: props.house
-        })
+        });
+        dispatch(editHousePhotos(props.house.photos));
     }
 
     const handleStatus = () => {
@@ -73,7 +75,7 @@ const UserHouse = (props: UserHouseProps) => {
                 <Grid item md={4}
                       onClick={openHouseInfo}
                       className="house-image d-flex flex-column align-items-center justify-content-center">
-                    <img src={props.house.photos[0].path} className="image" alt="house"/>
+                    <img src={props.house.image} className="image" alt="house"/>
                 </Grid>
                 <Grid item md={4}
                       onClick={openHouseInfo}

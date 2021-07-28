@@ -150,14 +150,12 @@ class Login extends React.Component<LoginProps, LoginState> {
                     onClose={() => this.setState({...this.state, open: false})}
                 />
             </Paper>
-    )
-        ;
+        )
     }
 }
 
 function mapStateTpProps({user, flags}: ReduxState, ownProps: LoginProps) {
-    console.log(user);
-    return{
+    return {
         user: user,
         flags: flags
     }
@@ -165,7 +163,7 @@ function mapStateTpProps({user, flags}: ReduxState, ownProps: LoginProps) {
 
 export default connect(mapStateTpProps, {login, setIsLogin})(Login);
 
-interface LoginProps extends RouteComponentProps{
+interface LoginProps extends RouteComponentProps {
     user: User,
     flags: Flags,
     login: (user: User, succeed: (res: User) => void, fail: () => void) => object,

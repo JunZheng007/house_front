@@ -21,7 +21,7 @@ const Reviews = (props: ReviewsProps) => {
     }, [reviews])
 
     const handleChangePage = (event: ChangeEvent<unknown>, page: number) => {
-        setReviewsToShow(reviews.content.slice((page - 1) * 2, page * 2));
+        setReviewsToShow(reviews?.content.slice((page - 1) * 2, page * 2));
     }
 
     return (

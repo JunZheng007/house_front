@@ -16,6 +16,7 @@ class Houses extends React.Component<HousesProps, any> {
 
     componentDidMount() {
         this.props.houses === null && this.props.getHousesOfPage(0);
+        !this.props.houses?.hasOwnProperty('content') && this.props.getHousesOfPage(0);
     }
 
     handleChangePage = (event: ChangeEvent<unknown>, page: number) => {

@@ -1,3 +1,5 @@
+import {HouseFile} from "./HouseFile";
+
 export interface User {
     id: number | null,
     username: string,
@@ -5,5 +7,5 @@ export interface User {
     email: string,
     phone: string,
     type: string,
-    photo: string
+    photo: HouseFile
 }
